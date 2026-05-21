@@ -1,0 +1,6 @@
+.gradle/
+build/
+target/
+!gradle/wrapper/gradle-wrapper.jar
+*.log
+.DS_Store

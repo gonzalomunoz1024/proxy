@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: backstage-query-translator-proxy
+
+server:
+  port: 8080
+
+proxy:
+  downstream:
+    base-url: ${DOWNSTREAM_BASE_URL:http://localhost:9090}
+    path: ${DOWNSTREAM_PATH:/resources}
+    id-field: ${DOWNSTREAM_ID_FIELD:metadata.uid}
+    timeout-ms: 5000
+    max-or-groups: 25
+    retry:
+      max-attempts: 3
+      backoff-ms: 200
+  cache:
+    enabled: true
+    ttl-seconds: 60
+    max-size: 10000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+
+logging:
+  level:
+    com.platform.proxy: INFO
